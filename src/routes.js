@@ -1,7 +1,10 @@
 import React from 'react';
+// import Cars from './views/cars/Cars';
 
+const Cars = React.lazy(() => import('./views/cars/Cars'));
 const Clients = React.lazy(() => import('./views/clients/Clients'));
 const AddEdit = React.lazy(() => import('./views/clients/AddEdit'));
+const AddEditCars = React.lazy(() => import('./views/cars/AddEdit'));
 const Toaster = React.lazy(() =>
 	import('./views/notifications/toaster/Toaster')
 );
@@ -130,6 +133,8 @@ const routes = [
 	{ path: '/users/:id', exact: true, name: 'User Details', component: User },
 	{ path: '/clients', exact: true, name: 'Users', component: Clients },
 	{ path: '/addEdit', exact: true, name: 'Users', component: AddEdit },
+	{ path: '/cars', exact: true, name: 'Cars', component: Cars },
+	{ path: '/addEdit-cars', exact: true, name: 'Cars', component: AddEditCars },
 ];
 
 export default routes;

@@ -23,7 +23,7 @@ const _nav = [
 	{
 		_tag: 'CSidebarNavItem',
 		name: 'Машини',
-		to: '/theme/typography',
+		to: '/cars',
 		icon: 'cil-car-alt',
 	},
 	{

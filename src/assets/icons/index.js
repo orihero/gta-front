@@ -28,6 +28,7 @@ import {
 	cibGooglePay,
 	cibCcAmex,
 	cilFilter,
+	cilLowVision,
 } from '@coreui/icons';
 import { cifUs, cifBr, cifIn, cifFr, cifEs, cifPl } from '@coreui/icons';
 import {
@@ -136,6 +137,7 @@ export const icons = Object.assign(
 	},
 	{
 		cilFilter,
+		cilLowVision,
 		cilPlus,
 		cilCommand,
 		cilCarAlt,
