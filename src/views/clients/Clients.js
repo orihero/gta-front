@@ -8,15 +8,24 @@ import {
 	CProgress,
 	CRow,
 } from '@coreui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import requests, { url } from 'src/api/requests';
+import moment from 'moment';
 
 export default function Clients() {
+	const [clients, setClients] = useState([]);
 	let history = useHistory();
 	let onAddPress = () => {
-		console.log('ADDING');
 		history.push('/addEdit');
 	};
+	let effect = async () => {
+		let res = await requests.clients.get();
+		setClients(res.data.data);
+	};
+	useEffect(() => {
+		effect();
+	}, []);
 	return (
 		<div>
 			<CCard>
@@ -59,55 +68,70 @@ export default function Clients() {
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td className='text-center'>
-									<div className='c-avatar'>
-										<img
-											src={'avatars/1.jpg'}
-											className='c-avatar-img'
-											alt='admin@bootstrapmaster.com'
-										/>
-										<span className='c-avatar-status bg-success'></span>
-									</div>
-								</td>
-								<td>
-									<div>Yiorgos Avraamu</div>
-									<div className='small text-muted'>
-										<span>New</span> | Registered: Jan 1,
-										2015
-									</div>
-								</td>
-								<td className='text-center'>
-									<div className="number">
-										<a className="number-link" href="#">+99890 313 36 36</a>
-									</div>
-								</td>
+							{clients &&
+								clients.length > 0 &&
+								clients.map((e) => {
+									return (
+										<tr>
+											<td className='text-center'>
+												<div className='c-avatar'>
+													<img
+														src={`${url}${e.avatar}`}
+														className='c-avatar-img'
+														alt='admin@bootstrapmaster.com'
+													/>
+													<span className='c-avatar-status bg-success'></span>
+												</div>
+											</td>
+											<td>
+												<div>
+													{e.firstname} {e.lastname}
+												</div>
+												<div className='small text-muted'>
+													<span>New</span> |
+													Registered:{' '}
+													{moment(
+														e.created_at
+													).format('DD/MM/YYYY')}
+												</div>
+											</td>
+											<td className='text-center'>
+												<div className='number'>
+													<a
+														className='number-link'
+														href='#'>
+														{e.phone_numbers}
+													</a>
+												</div>
+											</td>
 
-								<td className='text-center'>
-									<div className="float-left">
-										<span>18-02.2021</span>
-									</div>
-								</td>
+											<td className='text-center'>
+												<div className='float-left'>
+													<span>
+														{e.date_of_birth}
+													</span>
+												</div>
+											</td>
 
-								<td className='text-center'>
-
-									<div className="float-left">
-									
-									<CButton
-										color='primary'
-										onClick={onAddPress}
-										className='float-right'>
-										<CIcon name='cil-pencil' />
-									</CButton>
-									<CButton
-										color='primary'
-										onClick={onAddPress}
-										className='float-right mr-4'>
-										<CIcon name='cil-magnifying-glass' />
-									</CButton>
-									</div>
-								</td>
-							</tr>
+											<td className='text-center'>
+												<div className='float-left'>
+													<CButton
+														color='primary'
+														onClick={onAddPress}
+														className='float-right'>
+														<CIcon name='cil-pencil' />
+													</CButton>
+													<CButton
+														color='primary'
+														onClick={onAddPress}
+														className='float-right mr-4'>
+														<CIcon name='cil-magnifying-glass' />
+													</CButton>
+												</div>
+											</td>
+										</tr>
+									);
+								})}
 						</tbody>
 					</table>
 				</CCardBody>

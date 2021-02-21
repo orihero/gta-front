@@ -2,9 +2,11 @@ import React from 'react';
 // import Cars from './views/cars/Cars';
 
 const Cars = React.lazy(() => import('./views/cars/Cars'));
+const Brands = React.lazy(() => import('./views/brands/Brands'));
 const Clients = React.lazy(() => import('./views/clients/Clients'));
 const AddEdit = React.lazy(() => import('./views/clients/AddEdit'));
 const AddEditCars = React.lazy(() => import('./views/cars/AddEdit'));
+
 const Toaster = React.lazy(() =>
 	import('./views/notifications/toaster/Toaster')
 );
@@ -53,7 +55,7 @@ const CoreUIIcons = React.lazy(() =>
 	import('./views/icons/coreui-icons/CoreUIIcons')
 );
 const Flags = React.lazy(() => import('./views/icons/flags/Flags'));
-const Brands = React.lazy(() => import('./views/icons/brands/Brands'));
+// const Brands = React.lazy(() => import('./views/icons/brands/Brands'));
 const Alerts = React.lazy(() => import('./views/notifications/alerts/Alerts'));
 const Badges = React.lazy(() => import('./views/notifications/badges/Badges'));
 const Modals = React.lazy(() => import('./views/notifications/modals/Modals'));
@@ -134,6 +136,7 @@ const routes = [
 	{ path: '/clients', exact: true, name: 'Users', component: Clients },
 	{ path: '/addEdit', exact: true, name: 'Users', component: AddEdit },
 	{ path: '/cars', exact: true, name: 'Cars', component: Cars },
+	{ path: '/brands', exact: true, name: 'Brands', component: Brands },
 	{ path: '/addEdit-cars', exact: true, name: 'Cars', component: AddEditCars },
 ];
 

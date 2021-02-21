@@ -26,18 +26,18 @@ const _nav = [
 		to: '/cars',
 		icon: 'cil-car-alt',
 	},
-	{
-		_tag: 'CSidebarNavItem',
-		name: 'Машини',
-		to: '/theme/typography',
-		icon: 'cil-car-alt',
-	},
-	{
-		_tag: 'CSidebarNavItem',
-		name: 'Машини',
-		to: '/theme/typography',
-		icon: 'cil-car-alt',
-	},
+	// {
+	// 	_tag: 'CSidebarNavItem',
+	// 	name: 'Машини',
+	// 	to: '/theme/typography',
+	// 	icon: 'cil-car-alt',
+	// },
+	// {
+	// 	_tag: 'CSidebarNavItem',
+	// 	name: 'Машини',
+	// 	to: '/theme/typography',
+	// 	icon: 'cil-car-alt',
+	// },
 	{
 		_tag: 'CSidebarNavTitle',
 		_children: ['Cправичники'],
@@ -45,7 +45,7 @@ const _nav = [
 	{
 		_tag: 'CSidebarNavItem',
 		name: 'Бренди',
-		to: '/theme/typography',
+		to: '/brands',
 		icon: 'cil-star',
 	},
 	// {

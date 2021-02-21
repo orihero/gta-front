@@ -15,10 +15,12 @@ import {
 	CLabel,
 	CRow,
 } from '@coreui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import requests, { url } from 'src/api/requests';
 
 export default function AddEdit() {
+	let history = useHistory();
 	const [state, setState] = useState({
 		firstname: '',
 		lastname: '',
@@ -31,6 +33,9 @@ export default function AddEdit() {
 	let onInputChange = (e) => {
 		setState({ ...state, [e.target.name]: e.target.value });
 	};
+	useEffect(() => {
+		console.log({ state });
+	});
 	let onFileChange = async (e) => {
 		let form = new FormData();
 		e.target.files.forEach((e) => {
@@ -38,20 +43,31 @@ export default function AddEdit() {
 		});
 		try {
 			let urls = await requests.upload.multiple(form);
+			let url = urls.data.data.reduce((prev, current, i) => {
+				console.log({ current, prev });
+				let res = prev + current;
+				if (i !== urls.data.data.length - 1) {
+					res += ',';
+				}
+				return res;
+			}, '');
+			console.log({ url, urls });
 			setState({
 				...state,
-				[e.target.name]: urls.data.data.reduce(
-					(prev, current, i) =>
-						prev + current + i === urls.data.data.length - 1
-							? ''
-							: ',',
-					''
-				),
+				[e.target.name]: url,
 			});
 		} catch (error) {}
 	};
 	let onSubmit = async (e) => {
-		let res = await requests.clients.create(e);
+		console.log('DSA');
+		try {
+			let res = await requests.clients.create(state);
+		} catch (error) {
+			console.error(error);
+			console.error({ res: error?.response });
+		}
+		e.preventDefault();
+		history.push('/clients');
 	};
 	return (
 		<div>
@@ -137,7 +153,7 @@ export default function AddEdit() {
 										<CCol>
 											<CInputFile
 												id='file-input'
-												name='file-input'
+												name='avatar'
 												custom
 												onChange={onFileChange}
 											/>
@@ -150,13 +166,12 @@ export default function AddEdit() {
 									</CInputGroup>
 								</CFormGroup>
 								{state.avatar && (
-									<div className='c-avatar'>
+									<div className='mb-2'>
 										<img
 											src={`${url}${state.avatar}`}
-											className='c-avatar-img'
+											style={{ width: 100, height: 100 }}
 											alt='admin@bootstrapmaster.com'
 										/>
-										<span className='c-avatar-status bg-success'></span>
 									</div>
 								)}
 								<CFormGroup>
@@ -169,7 +184,7 @@ export default function AddEdit() {
 										<CCol>
 											<CInputFile
 												id='file-multiple-input'
-												name='file-multiple-input'
+												name='passport_photos'
 												multiple
 												custom
 												onChange={onFileChange}
@@ -182,10 +197,26 @@ export default function AddEdit() {
 										</CCol>
 									</CInputGroup>
 								</CFormGroup>
+								{state.passport_photos &&
+									state.passport_photos
+										.split(',')
+										.map((e, i) => {
+											return (
+												<div key={i} className='mb-2'>
+													<img
+														src={`${url}${e}`}
+														style={{
+															width: 100,
+															height: 100,
+														}}
+														alt='admin@bootstrapmaster.com'
+													/>
+												</div>
+											);
+										})}
 								<CFormGroup className='form-actions float-right'>
 									<CButton
 										onClick={onSubmit}
-										type='submit'
 										size='sm'
 										color='success'>
 										Сохранить
