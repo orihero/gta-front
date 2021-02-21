@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export let url = 'http://localhost:8090';
+export let url = 'http://134.0.116.109:8090';
 export let apiUrl = `${url}/api`;
 
 let requests = {
